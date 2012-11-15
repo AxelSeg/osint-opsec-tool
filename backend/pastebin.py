@@ -1,5 +1,16 @@
 #!/usr/bin/python
 
+# This script is a modified version of the "scrapePastebinMySQL.py" script from 
+# AndrewMohawk.com's PasteLert v2
+#
+# ---- EXTRACTED FROM ORIGINAL HEADER ---- 
+# Parts stolen from @shellguardians pastebin.py script - Thanks!
+# Do whatever you want with it -shrug-
+# Andrew MacPherson
+# @andrewmohawk
+# http://www.andrewmohawk.com/
+# ----- END EXTRACTED HEADER ---- 
+
 import datetime
 import re
 import random
