@@ -1,0 +1,172 @@
+REQUIREMENTS
+============
+
+- Apache HTTP Server 2+ 
+- MySQL 5.5+
+- PHP 5+
+- Python 2.7+
+- Postfix (with authentication; tested; you can probably use your preferred MTA) 
+- GNU Screen
+- The following Python libraries (grep 'import' osint-opsec-tool/backend/* --no-filename | sort | uniq):
+BeautifulSoup (apt-get install python-beautifulsoup)
+ConfigParser
+calendar
+datetime
+email.utils
+getpass
+gzip
+json
+MySQLdb (apt-get install python-mysqldb)
+os
+random
+re
+smtplib
+socket
+StringIO
+sys
+time
+urllib2
+
+
+OPSEC TOOL INSTALLATION
+=======================
+
+0) Check all the above requirements have been met (i.e Apache installed etc)
+   It is probably easiest for most users to run this inside an Ubuntu 12.04LTS VM (what the tool was built on)
+
+1) Add new 'opsec' user
+    # adduser opsec
+
+2) Add 'opsec' to group 'www-data' (or appropriate apache group)
+    # usermod -a -G www-data opsec
+
+3) Set correct perms for /var/www
+    # chgrp -R www-data /var/www
+
+4) Give write perms for /var/www to www-data
+    # chmod -R g+w /var/www
+
+5) Change the Apache DocumentRoot to be the public directory of the tool:
+   (if RewriteEngine is 'on' you must use SSL) 
+
+    /etc/apache2/sites-available/default
+
+    <VirtualHost *:80>
+       DocumentRoot /var/www/osint-opsec-tool/public
+    
+       RewriteEngine on
+       RewriteCond %{SERVER_PORT} !^443$
+       RewriteRule ^/(.*) https://%{HTTP_HOST}/$1 [NC,R,L]
+
+    </VirtualHost>
+
+    /etc/apache2/sites-available/default-ssl
+    
+    [...SNIP...]
+    <VirtualHost _default_:443>
+
+        DocumentRoot /var/www/osint-opsec-tool/public/
+        <Directory />
+                Options FollowSymLinks
+                AllowOverride None
+        </Directory>
+        <Directory /var/www/>
+                Options -Indexes FollowSymLinks MultiViews
+                AllowOverride All
+                Order allow,deny
+                allow from all
+        </Directory>
+    [...SNIP...]
+
+6) Add SSL certs if applicable
+
+    /etc/apache2/sites-available/default-ssl
+
+    [...SNIP...]
+        SSLEngine on
+        SSLCertificateFile    /etc/ssl/certs/<x>.crt
+        SSLCertificateKeyFile /etc/ssl/private/<x>.key
+    [...SNI{...]
+
+7) Add rewrite and ssl module
+    # a2enmod rewrite
+    # a2enmod ssl
+
+8) Restart Aapache
+    # service apache2 restart
+
+NOTE: Perform the following steps as user 'opsec', NOT AS ROOT
+
+9) Create MySQL database and user:
+
+    $ mysql -u root -p
+    Enter password:
+    Welcome to the MySQL monitor.  Commands end with ; or \g.
+    [...]
+    Type 'help;' or '\h' for help. Type '\c' to clear the current input statement.
+         
+    mysql> CREATE DATABASE opsec;
+    Query OK, 1 row affected (0.00 sec)
+     
+    mysql> GRANT ALL PRIVILEGES ON opsec.* TO 'opsec_user'@'localhost'
+        -> IDENTIFIED BY 'some_complex_password';
+    Query OK, 0 rows affected (0.00 sec)
+      
+    mysql> FLUSH PRIVILEGES;
+    Query OK, 0 rows affected (0.01 sec)
+    
+    mysql> EXIT
+
+10) Clone the git repo into a directory Apache can read (e.g. /var/www)
+    $ git clone github.com/hyprwired/osint-opsec-tool
+
+11) Add the db_name, db_user and db_pw from above to the 'backend/config.ini' file:
+
+    [database]
+    db_host='localhost'
+    db_name='<>'
+    db_user='<>'
+    db_pw='<>'
+
+12) Run backend/setup.py to set up the database tables
+
+13) Add your StackExchange API key to backend/config.ini (get a key from http://stackapps.com/apps/oauth/register)
+
+14) Add your Google Maps API key backend/config.ini (get a key from https://developers.google.com/maps/signup)
+
+15) Add a unique User Agent for Reddit to backend/config.ini (e.g. your Reddit username)
+
+16) Add the sender email address (and pw) and receiver email address to backend/config.ini
+
+17) Set up the cron daemon with the bootstrap file (via crontab -e):
+
+    * * * * * /var/www/osint-opsec-tool/backend/bootstrap.py
+
+18) Start the pastebin scraper
+    $ screen
+    $ osint-opsec-tool/backend/pastebin.py 
+
+19) Browse to https://<yourhost>/opsec-osint-tool 
+   Default login: opsec:opsec
+
+20) Please change the password for the default 'opsec' account once you have logged in.
+
+
+-----------------------------------------------------------------------------------------------
+The following instructions only apply when installing new sources; most people can ignore them.
+-----------------------------------------------------------------------------------------------
+
+SOURCE INSTALLATION
+===================
+
+1) Add the source backend python scraping script to 'osint-opsec-tool/backend/<source.py>'
+2) Add the source.py and relevant function [e.g. source.search(keyword)] to 'osint-opsec-tool/backend/bootstrap.py'
+3) Add the source table(s) to the database
+4) Have the source show up in the webapp by:
+   a) Edit 'osint-opsec-tool/public/sources.php' and add 'genSourceBox("<Source>");'
+   b) Add the PHP library for the source to 'osint-opsec-tool/libs/<source.php>'
+   c) Add the JS for the source to 'osint-opsec-tool/js/<source.js>'
+   d) Add the API interface between the JS and the PHP library to 'osint-opsec-tool/api/<source>/add.user.php' etc
+   e) Add the 2 standard php files for the API; select.options.php and input.options.php
+      under 'osint-opsec-tool/api/<source>/'
+   f) Add a png logo to osint-opsec-tool/logos/<source.png>. Size 40px x 40px.
