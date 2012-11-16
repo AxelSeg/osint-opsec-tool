@@ -1,0 +1,53 @@
+body {
+    background-color: #000000;
+    color: #4682B4; /* X11: SteelBlue */
+    font-family: 'Lucida Grande','Lucida Sans Unicode',Tahoma,Verdana,sans-serif;
+    /* Lucida Grande for OSX, Lucida Sans Unicode for Windows*/
+}
+
+h1{
+    color: #4682B4; /* X11: SteelBlue */
+    font-size: 22px;
+    margin: 0;
+    margin-bottom: 10px;
+}
+
+#login-box{
+    border-color: #4682B4; /* X11: SteelBlue */
+    border-style: solid;
+    border-width: 2px;
+    height: 120px;
+    width: 300px;
+    position: absolute;
+    left: 50%;
+    top: 50%;
+    margin: -60px 0 0 -150px;
+    padding: 5px;
+    text-align: center;
+}
+
+label {
+    display: block;
+    float: left;
+    margin-left: 20px;
+    text-align: right;
+    width: 80px;
+}
+
+input {
+    float: left;
+    margin-left: 5px;
+    width: 155px;
+}
+
+input:focus {
+    border-color: #4682B4; /* X11: SteelBlue */
+    border-style: solid;
+    border-width: 2px;
+}
+
+button{
+    float: left;
+    margin-left: 104px;
+}
+
