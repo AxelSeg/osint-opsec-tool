@@ -243,20 +243,9 @@ function delUserKeyword($keyword, $source, $user){
 
 function getUsersKeywords($source, $user, $format){
 	
-    $sql = "SELECT DISTINCT keyword FROM `keywords` ";
-                        
-    $where = "WHERE 1=1 ";
-            
-    if($user != 'all'){
-        $where .= "AND user = :user ";      
-    }
-	        
-    $sql .= $where;
-    $sql .= "AND source = :source ORDER BY keyword";
+    $sql = "SELECT DISTINCT keyword FROM `keywords` WHERE user = :user AND source = :source ORDER BY keyword";
     $sth = $GLOBALS['dbh']->prepare($sql);
-    if($user != 'all'){                         
-        $sth->bindParam(':user', $user);             
-    }
+    $sth->bindParam(':user', $user);             
     $sth->bindParam(':source', $source);		                 
     $sth->execute();
 
