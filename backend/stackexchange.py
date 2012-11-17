@@ -70,6 +70,12 @@ def addAccounts(account_id, stackoverflow_user_id, serverfault_user_id):
     opsecHeader.db.commit()
 
 
+def writeDisplayName(account_id, display_name):
+    sql = "UPDATE stackexchange_users SET display_name = %s WHERE account_id = %s"
+    opsecHeader.cur.execute(sql, (display_name, account_id))
+    opsecHeader.db.commit()
+
+
 def getPost(account_id, site, user_id, content_type):
     latest_epoch_time = getLatestPost(user_id, site, content_type)
     queryString = 'http://api.stackexchange.com/2.1/users/' + str(user_id) + '/' + str(content_type) + 's?fromdate=' + str(latest_epoch_time) + '&order=desc&sort=creation&site=' + site + '&key=' + opsecHeader.stackexchange_api_key
@@ -121,6 +127,7 @@ def getPost(account_id, site, user_id, content_type):
             profile_image = x['owner']['profile_image']
             display_name = x['owner']['display_name']
 
+            writeDisplayName(account_id, display_name)
             writeLatestPost(account_id, user_id, site, content_type, creation_date, profile_image, url, content, display_name)
 
             keywords = opsecHeader.getUserKeywords(account_id, 'stackexchange')
