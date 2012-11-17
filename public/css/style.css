@@ -106,6 +106,7 @@ h3{
 
 .source-options{
    float: right;
+   padding-left: 5px;
 }
 
 #map{
