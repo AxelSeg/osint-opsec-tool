@@ -70,7 +70,7 @@ stackexchange_sql = "CREATE TABLE `stackexchange` (`id` int(11) NOT NULL AUTO_IN
 cur.execute(stackexchange_sql)
 db.commit()
 
-stackexchange_users_sql = "CREATE TABLE `stackexchange_users` (`id` int(11) NOT NULL AUTO_INCREMENT,`account_id` int(11) NOT NULL,`stackoverflow_user_id` int(11) NOT NULL,`serverfault_user_id` int(11) NOT NULL,PRIMARY KEY (`id`)) ENGINE=InnoDB AUTO_INCREMENT=1 DEFAULT CHARSET=latin1"
+stackexchange_users_sql = "CREATE TABLE `stackexchange_users` (`id` int(11) NOT NULL AUTO_INCREMENT,`account_id` int(11) NOT NULL,`stackoverflow_user_id` int(11) NOT NULL,`serverfault_user_id` int(11) NOT NULL, `display_name` VARCHAR(50), PRIMARY KEY (`id`)) ENGINE=InnoDB AUTO_INCREMENT=1 DEFAULT CHARSET=latin1"
 cur.execute(stackexchange_users_sql)
 db.commit()
 
