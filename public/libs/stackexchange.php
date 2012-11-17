@@ -36,7 +36,7 @@ function delUser($account_id){
 
 function getUsers($format){
 
-    $sql = "SELECT account_id FROM `stackexchange_users` ORDER BY account_id asc";
+    $sql = "SELECT display_name, account_id FROM `stackexchange_users` ORDER BY account_id asc";
     $sth = $GLOBALS['dbh']->query($sql);
     
     if($format == 'list'){
@@ -46,8 +46,9 @@ function getUsers($format){
     
     while($row = $sth->fetch()){
 	$account_id = htmlspecialchars($row[account_id]);
+        $display_name = htmlspecialchars($row[display_name]);
         if($format == 'list'){
-            echo "<option id='$account_id' value='$account_id'>$account_id</option>";
+            echo "<option id='$account_id' value='$account_id'>$display_name</option>";
         }
 	else{
             echo "'$account_id' ";
