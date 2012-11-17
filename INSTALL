@@ -118,7 +118,7 @@ NOTE: Perform the following steps as user 'opsec', NOT AS ROOT
     mysql> EXIT
 
 10) Clone the git repo into a directory Apache can read (e.g. /var/www)
-    $ git clone github.com/hyprwired/osint-opsec-tool
+    $ git clone git://github.com/hyprwired/osint-opsec-tool.git
 
 11) Add the db_name, db_user and db_pw from above to the 'backend/config.ini' file:
 
@@ -128,7 +128,7 @@ NOTE: Perform the following steps as user 'opsec', NOT AS ROOT
     db_user='<>'
     db_pw='<>'
 
-12) Run backend/setup.py to set up the database tables
+12) Run python backend/setup.py to set up the database tables
 
 13) Add your StackExchange API key to backend/config.ini (get a key from http://stackapps.com/apps/oauth/register)
 
@@ -144,9 +144,9 @@ NOTE: Perform the following steps as user 'opsec', NOT AS ROOT
 
 18) Start the pastebin scraper
     $ screen
-    $ osint-opsec-tool/backend/pastebin.py 
+    $ python osint-opsec-tool/backend/pastebin.py 
 
-19) Browse to https://<yourhost>/opsec-osint-tool 
+19) Browse to http(s)://<yourhost>/ 
    Default login: opsec:opsec
 
 20) Please change the password for the default 'opsec' account once you have logged in.
