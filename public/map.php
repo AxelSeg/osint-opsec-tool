@@ -56,7 +56,9 @@ function generateMarkersTwitter(){
 $markers = generateMarkersTwitter();
 
 $google_api_key = $config_array['google_api_key'];
-
+if(empty($google_api_key)){
+    exit('<div id="map"><div id="map_canvas">You need a Google Maps API key to use the map.</div></div>');	
+}
 ?>
     <link rel="stylesheet" href="./css/style.css">
     <script src="https://maps.googleapis.com/maps/api/js?key=<? echo $google_api_key;?>&sensor=false"></script>
