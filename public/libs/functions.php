@@ -13,6 +13,40 @@ else{
 
 require_once($_SERVER['DOCUMENT_ROOT'].'/config/db.php');
 
+function check_strong_password($candidate_password) {
+    $case1='/[A-Z]/';  // Uppercase
+    $case2='/[a-z]/';  // Lowercase
+    $case3='/[!@#$%^&*()-_=+{};:,<.>]/';  // Special chars
+    $case4='/[0-9]/';  // Numbers
+
+    if(preg_match_all($case1, $candidate_password, $o) < 1){ 
+        echo "Password requires at least 1 uppercase chacter.";
+	return false;
+    }
+
+    if(preg_match_all($case2, $candidate_password, $o) < 1){
+        echo "Password must contain at least 1 lower case character.";
+        return false;
+    }
+
+    if(preg_match_all($case3, $candidate_password, $o) < 1){
+        echo "Password must contain at least 1 special character.";
+	return false;
+    }
+
+    if(preg_match_all($case4, $candidate_password, $o) < 1){
+        echo "Password must contain at least 1 number.";
+        return false;
+    }
+
+    if(strlen($candidate_password)< 10) {
+        echo "Entered password must be at least 10 characters long.";
+        return false;
+    }
+    
+    return true;
+}
+
 function getLatestHit($column = "source"){
 
     $sql = "SELECT 'twitter' AS table_name, epoch_time FROM twitter
