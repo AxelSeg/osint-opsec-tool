@@ -29,20 +29,12 @@ else {
 
             $hashed_pw = $bcrypt->genHash($password_entered);
 
-            if(strlen($password_entered) < 10){
-    		    die("Password entered too short (less than 10 characters).");
-	    }	
-	    if (!preg_match('/^[a-z][A-Z]$/', $password)){
-		    die("Password needs to contain at least 1 lower/uppercase character, 1 number, and 1 symbol."); 
-	    }
-	    else{
-	        try {
-                    $stmt = $GLOBALS['dbh']->prepare("INSERT INTO `opsec_users`(user, password_hashed) VALUES (:user, :password_hashed)");
-                    $stmt->execute(array(':user' => $user_entered, ':password_hashed' => $hashed_pw));
-	        }catch (Exception $e){
-	            die("Error inserting into db");
-                }
-	    }
+	    try {
+                $stmt = $GLOBALS['dbh']->prepare("INSERT INTO `opsec_users`(user, password_hashed) VALUES (:user, :password_hashed)");
+                $stmt->execute(array(':user' => $user_entered, ':password_hashed' => $hashed_pw));
+	    }catch (Exception $e){
+	        die("Error inserting into db");
+            }
         }
    
         $delete_token_stmt = $GLOBALS['dbh']->prepare("DELETE FROM `opsec_registration_tokens` WHERE token = :token");
