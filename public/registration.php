@@ -26,7 +26,7 @@ if($token_from_table != ''){
     <div id="login-box">
         <h1>OPSEC TOOL Registration</h1>
         <form id="register" method="post" action="register.php">
-            <input type="hidden" name="token" value="<? echo "$token_from_table";?>" />
+            <input type="hidden" name="token" value="<? echo htmlspecialchars($token_from_table);?>" />
             <label>User:</label><input type="text" name="user" autofocus="autofocus" />
             <label>Password:</label><input type="password" name="password" />
             <button type="submit">Register</button>
