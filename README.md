@@ -42,7 +42,7 @@ real-time for keywords, then analyses the results, generates
 alerts, and maps trends of the data, finding all sorts of info people 
 probably don't want others to see... 
 
-Current monitered sites:
+Current monitered sites (Source | Native/Custom API | Authentication? | API Limits):
 -  Twitter       |  native API  |  noauth w/ 1.0; need auth for 1.1   |    150 req/hour
 -  Reddit        |  native API  |  auth through a unique User-Agent   |   1800 req/hour
 -  Wordpress     |  native API  |  noauth                             |       ?
