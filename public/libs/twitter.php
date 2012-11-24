@@ -120,7 +120,7 @@ function getResults($page, $user, $keyword){
             $created_at = htmlspecialchars(date('Y-M-d H:i:s',(strtotime($epoch_time))));
             $text .= " <a href='https://twitter.com/$from_user/status/$twitter_id' target='_blank'>[...]</a>";
 	    
-	    printf ("<tr><td>%s</td><td><div class=twitter-profile-pic><img src='%s'/></div><a href='https://twitter.com/%s' target='_blank'>%s</a></td><td>%s</td><td>%s</td></tr>\n", $real_time, $image, $from_user, $from_user, $text,  $keyword);
+	    printf ("<tr><td>%s</td><td><div class=twitter-profile-pic><img src="%s" width="48px" height="48px"/></div><a href='https://twitter.com/%s' target='_blank'>%s</a></td><td>%s</td><td>%s</td></tr>\n", $real_time, $image, $from_user, $from_user, $text,  $keyword);
         }
         echo '</tbody></table></div>';
     }
