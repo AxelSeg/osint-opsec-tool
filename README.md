@@ -42,27 +42,18 @@ real-time for keywords, then analyses the results, generates
 alerts, and maps trends of the data, finding all sorts of info people 
 probably don't want others to see... 
 
-The OSINT OPSEC tool can have many applications, ranging from checking if 
-your employees and public servants know when to STFU, knowing within minutes 
-when your latest customer DB has been dumped, to aggregating a whole heap 
-of passports, credit cards, and residency permits... 
-
 Current monitered sites:
-    Source      |   API    |          Authentication             |   Throttling
------------------------------------------------------------------------------------
-  Twitter       |  native  |  noauth w/ 1.0; need auth for 1.1   |    150 req/hour
-  Reddit        |  native  |  auth through a unique User-Agent   |   1800 req/hour
-  Wordpress     |  native  |  noauth                             |       ?
-  Facebook      |  native  |  noauth yet; may be needed for user | 70,000 req/hour
-  Pastebin      |  custom  |  noauth                             |       ?
-  StackExchange |  native  |  auth through API key               |    400 req/hour
+-  Twitter       |  native API  |  noauth w/ 1.0; need auth for 1.1   |    150 req/hour
+-  Reddit        |  native API  |  auth through a unique User-Agent   |   1800 req/hour
+-  Wordpress     |  native API  |  noauth                             |       ?
+-  Facebook      |  native API  |  noauth yet; may be needed for user | 70,000 req/hour
+-  Pastebin      |    custom    |  noauth                             |       ?
+-  StackExchange |  native API  |  auth through API key               |    400 req/hour
 
 Additionally the Google Maps API is used:
 
-    Source      |   API    |          Authentication             |   Throttling
------------------------------------------------------------------------------------
-  GeoCode API   |  native  |             noauth                  |  104 req/hour
-   Maps API     |  native  |              auth                   |       ?  
+- GeoCode API    |  native API  |             noauth                  |  104 req/hour
+- Maps API       |  native API  |              auth                   |       ?  
 
 
 Each API is generally not queried more than once a minute to prevent throttling
