@@ -20,7 +20,7 @@ else{
 <body>
 <div id="login-box">
     <h1>OSINT OPSEC TOOL</h1>
-    <form id="login" method="post" action="login.php">
+    <form id="login" method="post" action="login.php" autocomplete="off">
         <label>User:</label><input type="text" name="user" autofocus="autofocus" />
         <label>Password:</label><input type="password" name="password" />
         <button type="submit">Login</button>
