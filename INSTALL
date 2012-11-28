@@ -128,7 +128,7 @@ NOTE: Perform the following steps as user 'opsec', NOT AS ROOT
     db_user='<>'
     db_pw='<>'
 
-12) Run python backend/setup.py to set up the database tables
+12) Run cd backend; python setup.py to set up the database tables
 
 13) Add your StackExchange API key to backend/config.ini (get a key from http://stackapps.com/apps/oauth/register)
 
